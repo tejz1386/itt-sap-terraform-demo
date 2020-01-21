@@ -4,3 +4,7 @@ resource "null_resource" "cluster" {
     command = "echo sap_first_deployment"
   }
 }
+module "null_resource" {
+  source  = "app.terraform.io/bso-cloud-03/null_resource/azure"
+  version = "0.0.1"
+}
