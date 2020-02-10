@@ -1,0 +1,61 @@
+locals {
+  instances = "${csvdecode(file("../gcp_server_input.csv"))}"
+  server_ids  = [each.value.server_name]
+  disk_size_1 = [each.value.data_disk_data01]
+}
+#  for_each      = { for inst in local.instances : inst.server_name => inst }
+#  disk_count    = disk_number
+#  server_name   = server_name
+#
+#  variable "disk_types" {
+#  type = "map"
+#}
+
+#}
+dynamic "subnet_mapping" {
+  for_each = zipmap(server_ids, disk_size_1)
+  content {
+    server_id = subnet_mapping.key
+    disk_size_1 = subnet_mapping.value
+  
+}
+#resource null_resource "diskmapping" {
+#  for_each      = { for inst in local.instances : inst.server_name => inst }
+#  disk_count    = each.value.disk_number
+#  server_name   = each.value.server_name
+#  
+#  triggers {
+    
+
+#}
+
+variable "disk_count" {
+  description = "number of disks attached to every instance"
+  default     = "2"
+}
+
+
+module "shared_vars"{
+  source = "../shared_vars"
+}
+
+locals {
+  env = "${terraform.workspace}"
+}
+
+resource "google_compute_disk" "testdisk" {
+  for_each      = { for inst in local.instances : inst.server_name => inst }
+#  count = "${each.value.disk_number}"
+    name  = each.value.server_name-"data_disk"
+#  for num in {var(disk_count)}:
+#    name  = each.value.server_name-each.value.data_disk_data01
+    size  = each.value.data_disk_01
+  type  = "pd-ssd"
+  zone  = each.value.zone
+#  size  = 10
+  labels = {
+    environment = "${module.shared_vars.env_suffix}"
+  }
+  physical_block_size_bytes = 4096
+}
+
