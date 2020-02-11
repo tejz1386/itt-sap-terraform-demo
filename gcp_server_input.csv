@@ -1,3 +1,0 @@
-index_number,server_name,location,zone,ipaddr,machine_type,instance_type,os_disk,data_disk_01,data_disk_02,data_disk_03,data_disk_04,disk_number,ha_enabled
-2,gcp9999handef002,us-west2,us-west2-a,10.10.10.10,n1-standard-1,centos-7,,10,20,30,40,2,no
-1,gcp9999sapdef008,us-west2,us-west2-a,10.10.10.6,n1-standard-1,centos-7,,10,20,30,40,4,no
