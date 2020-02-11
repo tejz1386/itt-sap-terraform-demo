@@ -1,5 +1,5 @@
 provider "google" {
     credentials = "${var.credentials}"
-    project     = "us106484-09122019"
+    project     = "optimal-pursuit-261608"
     region      = "us-west2"
 }
